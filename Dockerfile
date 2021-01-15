@@ -21,6 +21,7 @@ RUN mkdir -p /usr/local/bin
 RUN wget https://get.symfony.com/cli/installer -O - | bash
 RUN chmod a+x /root/.symfony/bin/symfony
 RUN echo export PATH=\"\$HOME/.symfony/bin:\$PATH\" >> ~/.bashrc
+RUN echo /etc/init.d/mysql start >> ~/.bashrc
 # Add main start script for when image launches
 ADD run.sh /run.sh
 RUN chmod 0755 /run.sh
