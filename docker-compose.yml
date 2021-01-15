@@ -1,0 +1,11 @@
+version: '2'
+services:
+  site:
+    build: .
+    container_name: keliuPrieziura
+    ports:
+      - '8080:8000'
+    expose:
+      - '8000'
+    volumes:
+      - .:/app
