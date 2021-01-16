@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cipher{% endblock %}
+
+{% block body %}
+    <h1>Cipher</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ cipher.id }}</td>
+            </tr>
+            <tr>
+                <th>Cipher</th>
+                <td>{{ cipher.cipher }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ cipher.name }}</td>
+            </tr>
+            <tr>
+                <th>Metric</th>
+                <td>{{ cipher.metric }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('cipher_index') }}">back to list</a>
+
+    <a href="{{ path('cipher_edit', {'id': cipher.id}) }}">edit</a>
+
+    {{ include('cipher/_delete_form.html.twig') }}
+{% endblock %}

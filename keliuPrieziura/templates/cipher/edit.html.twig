@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Cipher{% endblock %}
+
+{% block body %}
+    <h1>Edit Cipher</h1>
+
+    {{ include('cipher/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('cipher_index') }}">back to list</a>
+
+    {{ include('cipher/_delete_form.html.twig') }}
+{% endblock %}

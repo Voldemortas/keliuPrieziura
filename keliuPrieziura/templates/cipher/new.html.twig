@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Cipher{% endblock %}
+
+{% block body %}
+    <h1>Create new Cipher</h1>
+
+    {{ include('cipher/_form.html.twig') }}
+
+    <a href="{{ path('cipher_index') }}">back to list</a>
+{% endblock %}
