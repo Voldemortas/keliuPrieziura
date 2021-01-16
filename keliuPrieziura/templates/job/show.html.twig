@@ -8,8 +8,32 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ job.id }}</td>
+                <th>Šifras</th>
+                <td>{{ job.cipher.cipher }}</td>
+            </tr>
+            <tr>
+                <th>Pavadinimas</th>
+                <td>{{ job.cipher.name  }}</td>
+            </tr>
+            <tr>
+                <th>Kelias</th>
+                <td>{{ job.section.name }}</td>
+            </tr>
+            <tr>
+                <th>Nuo</th>
+                <td>{{ job.section.sectionStart }}</td>
+            </tr>
+            <tr>
+                <th>Iki</th>
+                <td>{{ job.section.sectionFinish }}</td>
+            </tr>
+            <tr>
+                <th>Atstumas</th>
+                <td>{{ job.distance }}</td>
+            </tr>
+            <tr>
+                <th>Matmuo</th>
+                <td>km</td>
             </tr>
         </tbody>
     </table>

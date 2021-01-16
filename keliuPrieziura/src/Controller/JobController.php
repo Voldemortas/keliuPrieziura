@@ -73,7 +73,11 @@ class JobController extends AbstractController
      */
     public function edit(Request $request, Job $job): Response
     {
-        $form = $this->createForm(JobType::class, $job);
+        $form = $this->createFormBuilder($job)
+            ->add('section', EntityType::class, ['class' => RoadSection::class, 'choice_label' => 'selectName'])
+            ->add('cipher', EntityType::class, ['class' => Cipher::class, 'choice_label' => 'selectName'])
+            ->add('distance', NumberType::class)
+            ->getForm();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
