@@ -8,14 +8,24 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>cipher</th>
+                <th>name</th>
+                <th>road</th>
+                <th>start</th>
+                <th>finish</th>
+                <th>distance</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for job in jobs %}
             <tr>
-                <td>{{ job.id }}</td>
+                <td>{{ job.cipher.cipher }}</td>
+                <td>{{ job.cipher.name }}</td>
+                <td>{{ job.section.name }}</td>
+                <td>{{ job.section.sectionStart }}</td>
+                <td>{{ job.section.sectionFinish }}</td>
+                <td>{{ job.distance }}</td>
                 <td>
                     <a href="{{ path('job_show', {'id': job.id}) }}">show</a>
                     <a href="{{ path('job_edit', {'id': job.id}) }}">edit</a>
