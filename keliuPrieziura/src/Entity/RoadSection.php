@@ -165,4 +165,10 @@ class RoadSection
 
         return $this;
     }
+
+
+    public function getSelectName(): ?string
+    {
+        return $this->roadNumber . ' (' . $this->name . ' ' . $this->sectionStart . '—' . $this->sectionFinish . 'km)';
+    }
 }

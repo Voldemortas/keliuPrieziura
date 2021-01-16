@@ -114,4 +114,9 @@ class Cipher
 
         return $this;
     }
+
+    public function getSelectName(): ?string
+    {
+        return $this->cipher . ' (' . $this->name . ')';
+    }
 }

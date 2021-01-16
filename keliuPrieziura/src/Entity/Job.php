@@ -29,6 +29,11 @@ class Job
      */
     private $section;
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $distance;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -54,6 +59,18 @@ class Job
     public function setSection(?RoadSection $section): self
     {
         $this->section = $section;
+
+        return $this;
+    }
+
+    public function getDistance(): ?float
+    {
+        return $this->distance;
+    }
+
+    public function setDistance(float $distance): self
+    {
+        $this->distance = $distance;
 
         return $this;
     }

@@ -14,7 +14,7 @@ class JobType extends AbstractType
         $builder
             ->add('cipher')
             ->add('section')
-        ;
+            ->add('distance');
     }
 
     public function configureOptions(OptionsResolver $resolver)

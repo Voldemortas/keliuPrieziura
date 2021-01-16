@@ -83,7 +83,7 @@ class CipherController extends AbstractController
      */
     public function delete(Request $request, Cipher $cipher): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$cipher->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $cipher->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($cipher);
             $entityManager->flush();
