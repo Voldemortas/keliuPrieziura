@@ -19,7 +19,7 @@ RUN apt-get install -y mysql-server
 # Install Composer
 RUN wget https://getcomposer.org/download/2.0.8/composer.phar
 RUN chmod +x composer.phar
-RUN echo alias composer='/app/composer.phar' >> ~/.bashrc
+RUN echo alias composer='/composer.phar' >> ~/.bashrc
 # Install Symfony
 RUN mkdir -p /usr/local/bin
 RUN wget https://get.symfony.com/cli/installer -O - | bash
