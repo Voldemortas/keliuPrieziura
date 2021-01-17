@@ -35,6 +35,11 @@ class Section
      */
     private $jobs;
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $finish;
+
     public function __construct()
     {
         $this->jobs = new ArrayCollection();
@@ -95,6 +100,18 @@ class Section
                 $job->setSection(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFinish(): ?float
+    {
+        return $this->finish;
+    }
+
+    public function setFinish(float $finish): self
+    {
+        $this->finish = $finish;
 
         return $this;
     }
