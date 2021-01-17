@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Job index{% endblock %}
+{% block title %}Darbai{% endblock %}
 
 {% block body %}
     <h1>Darbai</h1>
@@ -15,6 +15,7 @@
                 <th>Pabaiga</th>
                 <th>Mato vnt.</th>
                 <th>Kiekis</th>
+                {{ is_admin()?'<th>Veiksmai</th>':''}}       
             </tr>
         </thead>
         <tbody>
@@ -27,6 +28,9 @@
                 <td>{{ job.section.finish }}</td>
                 <td>{{ job.cipher.metric.name }}</td>
                 <td>{{ job.distance }}</td>
+                {% if is_admin() %}
+                    <td><a href="{{ path('job_edit', {'id': job.id}) }}">Redaguoti</a></td>
+                {% endif %}
             </tr>
         {% else %}
             <tr>

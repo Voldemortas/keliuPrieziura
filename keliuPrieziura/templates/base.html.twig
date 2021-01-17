@@ -2,24 +2,29 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Kelių danga!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
         <nav>
-            <ul>
-                <li>
-                    <a href="/roadsection">Keliai</a>
-                </li>
-                <li>
-                    <a href="/cipher">Šifrai</a>
-                </li>
-                <li>
-                    <a href="/job">Darbai</a>
-                </li>
-            </ul>
-        Teisės:  {{ is_admin()?'Admin':'Worker' }}<br />
-        <a href="/toggle">Toggle</a>
+            {% if is_admin() %}
+                <ul>
+                    <li>
+                        <a href="/roadsection">Keliai</a>
+                    </li>
+                    <li>
+                        <a href="/cipher">Šifrai</a>
+                    </li>
+                    <li>
+                        <a href="/job">Darbai</a>
+                    </li>
+                </ul>
+                Teisės:  Admin<br />
+                <a href="/toggle">Pakeisti vartotojo tipą</a>
+            {% else %}
+                Teisės: Darbuotojas<br />
+                <a href="/toggle">Pakeisti vartotojo tipą</a>
+            {% endif %}
         </nav>
         <main>
             {% block body %}{{body}}{% endblock %}
