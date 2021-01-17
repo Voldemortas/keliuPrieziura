@@ -19,6 +19,8 @@
                 </li>
             </ul>
         </nav>
+        Teisės:  {{ is_admin()?'Admin':'Worker' }}<br />
+        <a href="/toggle">Toggle</a>
         {% block body %}{{body}}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>

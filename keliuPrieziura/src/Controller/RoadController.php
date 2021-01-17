@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/road")
+ * @Route("/")
  */
 class RoadController extends AbstractController
 {
@@ -26,7 +26,7 @@ class RoadController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="road_new", methods={"GET","POST"})
+     * @Route("/job/new", name="road_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -49,7 +49,7 @@ class RoadController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="road_show", methods={"GET"})
+     * @Route("/job/{id}", name="road_show", methods={"GET"})
      */
     public function show(Road $road): Response
     {
@@ -59,7 +59,7 @@ class RoadController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="road_edit", methods={"GET","POST"})
+     * @Route("/job/{id}/edit", name="road_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Road $road): Response
     {
@@ -79,11 +79,11 @@ class RoadController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="road_delete", methods={"DELETE"})
+     * @Route("/job/{id}", name="road_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Road $road): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$road->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $road->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($road);
             $entityManager->flush();
