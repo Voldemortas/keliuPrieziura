@@ -21,7 +21,7 @@ class ToggleController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($admin);
         $entityManager->flush();
-        $response =  $this->redirect('/cipher', 301);
+        $response =  $this->redirect('/', 301);
         $response->setCache(['max_age' => 0]);
         return $response;
     }

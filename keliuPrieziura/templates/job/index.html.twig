@@ -3,25 +3,30 @@
 {% block title %}Job index{% endblock %}
 
 {% block body %}
-    <h1>Job index</h1>
+    <h1>Darbai</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Distance</th>
-                <th>actions</th>
+                <th>Šifras</th>
+                <th>Darbas</th>
+                <th>Kelias</th>
+                <th>Pradžia</th>
+                <th>Pabaiga</th>
+                <th>Mato vnt.</th>
+                <th>Kiekis</th>
             </tr>
         </thead>
         <tbody>
         {% for job in jobs %}
             <tr>
-                <td>{{ job.id }}</td>
+                <td>{{ job.cipher.cipher }}</td>
+                <td>{{ job.cipher.name }}</td>
+                <td>{{ job.section.road.number }} {{ job.section.road.name }}</td>                
+                <td>{{ job.section.start }}</td>
+                <td>{{ job.section.finish }}</td>
+                <td>{{ job.cipher.metric.name }}</td>
                 <td>{{ job.distance }}</td>
-                <td>
-                    <a href="{{ path('job_show', {'id': job.id}) }}">show</a>
-                    <a href="{{ path('job_edit', {'id': job.id}) }}">edit</a>
-                </td>
             </tr>
         {% else %}
             <tr>
@@ -31,5 +36,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('job_new') }}">Create new</a>
+    <a href="{{ path('job_new') }}">Užpildyti naują darbą</a>
 {% endblock %}
