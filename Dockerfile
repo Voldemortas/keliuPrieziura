@@ -26,6 +26,12 @@ RUN wget https://get.symfony.com/cli/installer -O - | bash
 RUN chmod a+x /root/.symfony/bin/symfony
 RUN echo export PATH=\"\$HOME/.symfony/bin:\$PATH\" >> ~/.bashrc
 RUN echo /etc/init.d/mysql start >> ~/.bashrc
+RUN /etc/init.d/mysql start
+# Set up mysql and other configs for the first rune
+RUN echo 1 > /first_time
+ADD mysql.sh /mysql.sh
+RUN chmod +x /mysql.sh
+RUN echo /bin/bash /mysql.sh >> ~/.bashrc
 # Add main start script for when image launches
 ADD run.sh /run.sh
 RUN chmod 0755 /run.sh
