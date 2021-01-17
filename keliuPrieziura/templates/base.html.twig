@@ -18,10 +18,12 @@
                     <a href="/job">Darbai</a>
                 </li>
             </ul>
-        </nav>
         Teisės:  {{ is_admin()?'Admin':'Worker' }}<br />
         <a href="/toggle">Toggle</a>
-        {% block body %}{{body}}{% endblock %}
+        </nav>
+        <main>
+            {% block body %}{{body}}{% endblock %}
+        </main>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
