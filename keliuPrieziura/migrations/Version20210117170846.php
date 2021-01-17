@@ -20,7 +20,7 @@ final class Version20210117170846 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE admin (id INT AUTO_INCREMENT NOT NULL, toggled TINYINT(1) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE IF NOT EXISTS admin (id INT AUTO_INCREMENT NOT NULL, toggled TINYINT(1) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('INSERT INTO admin (toggled) VALUES (1);');
     }
 
