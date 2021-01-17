@@ -16,6 +16,10 @@ RUN rm -rf /var/www/* \
 ADD vhost.conf /etc/apache2/sites-available/000-default.conf
 # Install mysql
 RUN apt-get install -y mysql-server
+# Install Composer
+RUN wget https://getcomposer.org/download/2.0.8/composer.phar
+RUN chmod +x composer.phar
+RUN echo alias composer='/app/composer.phar' >> ~/.bashrc
 # Install Symfony
 RUN mkdir -p /usr/local/bin
 RUN wget https://get.symfony.com/cli/installer -O - | bash

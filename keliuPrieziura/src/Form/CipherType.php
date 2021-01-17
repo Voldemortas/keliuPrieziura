@@ -14,6 +14,7 @@ class CipherType extends AbstractType
         $builder
             ->add('cipher')
             ->add('name')
+            ->add('type')
             ->add('metric')
         ;
     }

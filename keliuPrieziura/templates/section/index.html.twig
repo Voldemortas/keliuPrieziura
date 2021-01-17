@@ -1,26 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Job index{% endblock %}
+{% block title %}Section index{% endblock %}
 
 {% block body %}
-    <h1>Job index</h1>
+    <h1>Section index</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Distance</th>
+                <th>Start</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for job in jobs %}
+        {% for section in sections %}
             <tr>
-                <td>{{ job.id }}</td>
-                <td>{{ job.distance }}</td>
+                <td>{{ section.id }}</td>
+                <td>{{ section.start }}</td>
                 <td>
-                    <a href="{{ path('job_show', {'id': job.id}) }}">show</a>
-                    <a href="{{ path('job_edit', {'id': job.id}) }}">edit</a>
+                    <a href="{{ path('section_show', {'id': section.id}) }}">show</a>
+                    <a href="{{ path('section_edit', {'id': section.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -31,5 +31,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('job_new') }}">Create new</a>
+    <a href="{{ path('section_new') }}">Create new</a>
 {% endblock %}

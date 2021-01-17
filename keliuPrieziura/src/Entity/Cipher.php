@@ -20,7 +20,7 @@ class Cipher
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=25)
+     * @ORM\Column(type="string", length=10)
      */
     private $cipher;
 
@@ -30,9 +30,15 @@ class Cipher
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=25)
+     * @ORM\ManyToOne(targetEntity=RoadType::class, inversedBy="ciphers")
      */
-    private $metric = 'km';
+    private $type;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Metric::class, inversedBy="ciphers")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $metric;
 
     /**
      * @ORM\OneToMany(targetEntity=Job::class, mappedBy="cipher")
@@ -73,12 +79,24 @@ class Cipher
         return $this;
     }
 
-    public function getMetric(): ?string
+    public function getType(): ?RoadType
+    {
+        return $this->type;
+    }
+
+    public function setType(?RoadType $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getMetric(): ?Metric
     {
         return $this->metric;
     }
 
-    public function setMetric(string $metric): self
+    public function setMetric(?Metric $metric): self
     {
         $this->metric = $metric;
 
@@ -113,10 +131,5 @@ class Cipher
         }
 
         return $this;
-    }
-
-    public function getSelectName(): ?string
-    {
-        return $this->cipher . ' (' . $this->name . ')';
     }
 }
