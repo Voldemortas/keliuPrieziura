@@ -97,7 +97,7 @@ class AppFixtures extends Fixture
         }
         for ($i = 0; $i < count($sections); $i++) {
             for ($j = 1; $j < count($sections[$i]); $j++) {
-                if ($sections[$i][$j] === null) {
+                if ($sections[$i][$j] === null || $sections[$i][$j - 1] === null) {
                     continue;
                 }
                 $section[$i . '.' . ($j - 1)] = new Section();

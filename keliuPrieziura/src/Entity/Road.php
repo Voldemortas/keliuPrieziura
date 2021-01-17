@@ -132,4 +132,9 @@ class Road
 
         return $this;
     }
+
+    public function getSelectName(): ?string
+    {
+        return $this->number . ' ' . $this->name;
+    }
 }

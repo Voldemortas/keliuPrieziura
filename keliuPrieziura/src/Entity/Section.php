@@ -115,4 +115,9 @@ class Section
 
         return $this;
     }
+
+    public function getSelectName(): ?string
+    {
+        return $this->start  . '–' . $this->finish . 'km';
+    }
 }

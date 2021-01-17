@@ -1,4 +1,17 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
     <button class="btn">{{ button_label|default('Save') }}</button>
+    <script>
+        const section = {{section }}
+        const sections = {{sections | json_encode | raw}}
+        function updateOptions(check = false){
+            const selected = document.getElementById('form_road').value
+            document.getElementById('form_section').innerHTML = sections
+                .filter(e => e[0] == selected)[0][1]
+                .map(e => `<option value=${e[0]} ${check?e[0] === section?'selected':'':''}>${e[1]}</option>`)
+                .join('\n')
+        }
+        updateOptions(true)
+        document.getElementById('form_road').addEventListener('change', updateOptions)
+    </script>
 {{ form_end(form) }}
