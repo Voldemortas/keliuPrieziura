@@ -20,16 +20,17 @@ a:hover {
 }
 .sidenav__list {
   margin: 0;
-  list-style-type: none;
   padding-left: 0;
 }
 .sidenav__list__list {
   margin: 0;
-  list-style-type: none;
 }
 .sidenav__list__item {
   padding-top: 5px;
   font-size: 20px;
+}
+ul {
+  list-style-type: none;
 }
 .main {
   width: calc(100% - 250px);
@@ -45,6 +46,7 @@ a:hover {
 }
 .table {
   border-collapse: collapse;
+  min-width: 100%;
 }
 .table tr:nth-child(even),
 th {
@@ -60,4 +62,19 @@ th {
   border-style: solid;
   border-color: rgba(0, 0, 0, 0);
   padding: 10px 0;
+}
+#form {
+  font-size: 18px;
+}
+#form div select,
+input {
+  width: 100%;
+  align-content: center;
+  text-align-last: center;
+}
+#form li {
+  color: red;
+}
+#form ul {
+  padding: 0;
 }

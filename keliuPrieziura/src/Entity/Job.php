@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\JobRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
  * @ORM\Entity(repositoryClass=JobRepository::class)
@@ -73,5 +75,17 @@ class Job
         $this->cipher = $cipher;
 
         return $this;
+    }
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraint('distance', new Assert\GreaterThan([
+            'value' => 0,
+            'message' => 'Turi būti daugiau už 0',
+        ]));
+        $metadata->addPropertyConstraint('distance', new Assert\LessThanOrEqual([
+            'propertyPath' => 'section.distance',
+            'message' => 'Turi būti mažiau už visą atsumą arba jam lygu',
+        ]));
     }
 }

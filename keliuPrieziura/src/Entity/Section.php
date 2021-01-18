@@ -120,4 +120,11 @@ class Section
     {
         return $this->start  . '–' . $this->finish . 'km';
     }
+
+    public function getDistance(): ?float
+    {
+        $start = $this->start;
+        $finish = $this->finish;
+        return $finish - $start;
+    }
 }

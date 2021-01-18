@@ -37,7 +37,8 @@ class JobController extends AbstractController
                         ->orderBy('LENGTH(u.number), u.number', 'ASC');
                 },
                 'mapped' => false,
-                'data' => $section !== null ? $section->getRoad() : null
+                'data' => $section !== null ? $section->getRoad() : null,
+                'label' => 'Kelias'
             ])
             ->add('section', EntityType::class, [
                 'class' => Section::class,
@@ -45,6 +46,7 @@ class JobController extends AbstractController
                     return $repository->createQueryBuilder('u')->orderBy('u.start', 'ASC');
                 },
                 'choice_label' => 'selectName',
+                'label' => 'Ruožas'
             ])
             ->add('cipher', EntityType::class, [
                 'class' => Cipher::class,
@@ -52,8 +54,9 @@ class JobController extends AbstractController
                     return $repository->createQueryBuilder('u')->orderBy('u.cipher', 'ASC');
                 },
                 'choice_label' => 'selectName',
+                'label' => 'Šifras'
             ])
-            ->add('distance', NumberType::class)
+            ->add('distance', NumberType::class, ['label' => 'Kiekis'])
             ->getForm();
         $form->handleRequest($request);
         return $form;
