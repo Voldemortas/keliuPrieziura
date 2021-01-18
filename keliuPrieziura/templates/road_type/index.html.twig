@@ -1,34 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}RoadType index{% endblock %}
 
 {% block body %}
-    <h1>RoadType index</h1>
+    <h1>Dangos</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
+                <th>Danga</th>
+                <th>Veiksmai</th>
+                <th>Trinti</th>
             </tr>
         </thead>
         <tbody>
         {% for road_type in road_types %}
             <tr>
-                <td>{{ road_type.id }}</td>
                 <td>{{ road_type.name }}</td>
                 <td>
-                    <a href="{{ path('road_type_edit', {'id': road_type.id}) }}">edit</a>
-                </td>
+                    <a href="{{ path('road_type_edit', {'id': road_type.id}) }}">Redaguoti</a>  
+                </td>                      
+                <td>{{ include('road_type/_delete_form.html.twig') }}</td> 
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Nėra jokių įrašų</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('road_type_new') }}">Create new</a>
+    <a href="{{ path('road_type_new') }}">Sukurti naują</a>
 {% endblock %}

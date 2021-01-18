@@ -1,11 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New RoadType{% endblock %}
 
 {% block body %}
-    <h1>Create new RoadType</h1>
+    <h1>Sukurti naują dangos tipą</h1>
 
     {{ include('road_type/_form.html.twig') }}
 
-    <a href="{{ path('road_type_index') }}">back to list</a>
+    <a href="{{ path('road_type_index') }}">Grįžti į sąrašą</a>
 {% endblock %}

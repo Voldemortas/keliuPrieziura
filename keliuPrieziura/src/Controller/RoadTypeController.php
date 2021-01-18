@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\AdminService;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Form;
 
 /**
  * @Route("/road_type")
@@ -21,6 +23,16 @@ class RoadTypeController extends AbstractController
     {
         $this->adminService = $adminService;
     }
+
+    private function makeForm(RoadType $roadType, Request $request): Form
+    {
+        $form = $this->createFormBuilder($roadType)
+            ->add('name', TextType::class, ['label' => 'Pavadinimas'])
+            ->getForm();
+        $form->handleRequest($request);
+        return $form;
+    }
+
     /**
      * @Route("/", name="road_type_index", methods={"GET"})
      */
@@ -47,8 +59,7 @@ class RoadTypeController extends AbstractController
             return $response;
         }
         $roadType = new RoadType();
-        $form = $this->createForm(RoadTypeType::class, $roadType);
-        $form->handleRequest($request);
+        $form = $this->makeForm($roadType, $request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -74,8 +85,7 @@ class RoadTypeController extends AbstractController
             $response->setCache(['max_age' => 0]);
             return $response;
         }
-        $form = $this->createForm(RoadTypeType::class, $roadType);
-        $form->handleRequest($request);
+        $form = $this->makeForm($roadType, $request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
