@@ -8,27 +8,31 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Start</th>
-                <th>actions</th>
+                <th>Kelias</th>
+                <th>Pradžia</th>
+                <th>Pabaiga</th>
+                <th>Veiksmai</th>
+                <th>Trinti</th>
             </tr>
         </thead>
         <tbody>
         {% for section in sections %}
             <tr>
-                <td>{{ section.id }}</td>
+                <td>{{ section.road.selectName }}</td>
                 <td>{{ section.start }}</td>
+                <td>{{ section.finish }}</td>
                 <td>
-                    <a href="{{ path('section_edit', {'id': section.id}) }}">edit</a>
+                    <a href="{{ path('section_edit', {'id': section.id}) }}">Redaguoti</a>
                 </td>
+                <td>{{ include('section/_delete_form.html.twig') }}</td> 
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Nėra jokių įrašų</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('section_new') }}">Create new</a>
+    <a href="{{ path('section_new') }}">Sukurti naują</a>
 {% endblock %}

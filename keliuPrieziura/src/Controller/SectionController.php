@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Road;
 use App\Entity\Section;
 use App\Form\SectionType;
 use App\Repository\SectionRepository;
@@ -10,6 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\AdminService;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Form;
 
 /**
  * @Route("/section")
@@ -21,6 +25,22 @@ class SectionController extends AbstractController
     {
         $this->adminService = $adminService;
     }
+
+    private function makeForm(Section $section, Request $request): Form
+    {
+        $form = $this->createFormBuilder($section)
+            ->add('road', EntityType::class, [
+                'class' => Road::class,
+                'choice_label' => 'selectName',
+                'label' => 'Kelias'
+            ])
+            ->add('start', NumberType::class, ['label' => 'Pradžia'])
+            ->add('finish', NumberType::class, ['label' => 'Pabaiga'])
+            ->getForm();
+        $form->handleRequest($request);
+        return $form;
+    }
+
     /**
      * @Route("/", name="section_index", methods={"GET"})
      */
@@ -32,7 +52,7 @@ class SectionController extends AbstractController
             return $response;
         }
         return $this->render('section/index.html.twig', [
-            'sections' => $sectionRepository->findAll(),
+            'sections' => $sectionRepository->createQueryBuilder('u')->orderBy('u.road', 'ASC')->getQuery()->getResult()
         ]);
     }
 
@@ -47,8 +67,7 @@ class SectionController extends AbstractController
             return $response;
         }
         $section = new Section();
-        $form = $this->createForm(SectionType::class, $section);
-        $form->handleRequest($request);
+        $form = $this->makeForm($section, $request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -75,7 +94,7 @@ class SectionController extends AbstractController
             return $response;
         }
         $form = $this->createForm(SectionType::class, $section);
-        $form->handleRequest($request);
+        $form = $this->makeForm($section, $request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
