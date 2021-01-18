@@ -8,29 +8,31 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Cipher</th>
-                <th>Name</th>
-                <th>actions</th>
+                <th>Šifras</th>
+                <th>Pavadinimas</th>
+                <th>Matavimo vnt.</th>  
+                <th>Keisti</th>       
+                <th>Trinti</th>  
             </tr>
         </thead>
         <tbody>
         {% for cipher in ciphers %}
             <tr>
-                <td>{{ cipher.id }}</td>
                 <td>{{ cipher.cipher }}</td>
                 <td>{{ cipher.name }}</td>
+                <td>{{ cipher.metric.name }}</td>
                 <td>
-                    <a href="{{ path('cipher_edit', {'id': cipher.id}) }}">edit</a>
-                </td>
+                    <a href="{{ path('cipher_edit', {'id': cipher.id}) }}">Redaguoti</a>  
+                </td>                      
+                <td>{{ include('cipher/_delete_form.html.twig') }}</td> 
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">Nėra jokių įrašų</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('cipher_new') }}">Create new</a>
+    <a href="{{ path('cipher_new') }}">Sukurti naują šifrą</a>
 {% endblock %}

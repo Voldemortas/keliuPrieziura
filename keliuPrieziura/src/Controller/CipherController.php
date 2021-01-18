@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Cipher;
+use App\Entity\Metric;
+use App\Entity\RoadType;
 use App\Form\CipherType;
 use App\Repository\CipherRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -10,6 +12,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\AdminService;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Form;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 /**
  * @Route("/cipher")
@@ -21,6 +26,30 @@ class CipherController extends AbstractController
     {
         $this->adminService = $adminService;
     }
+
+    private function makeForm(Cipher $cipher, Request $request): Form
+    {
+        $form = $this->createFormBuilder($cipher)
+            ->add('cipher', TextType::class, ['label' => 'Šifras'])
+            ->add('name', TextType::class, ['label' => 'Pavadinimas'])
+            ->add('metric', EntityType::class, [
+                'class' => Metric::class,
+                'choice_label' => 'name',
+                'label' => 'Matas'
+            ])
+            ->add('type', EntityType::class, [
+                'class' => RoadType::class,
+                'choice_label' => 'name',
+                'label' => 'Danga',
+                'required' => false,
+                'empty_data' => ''
+            ])
+            ->getForm();
+        $form->handleRequest($request);
+        return $form;
+    }
+
+
     /**
      * @Route("/", name="cipher_index", methods={"GET"})
      */
@@ -48,8 +77,7 @@ class CipherController extends AbstractController
             return $response;
         }
         $cipher = new Cipher();
-        $form = $this->createForm(CipherType::class, $cipher);
-        $form->handleRequest($request);
+        $form = $this->makeForm($cipher, $request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -75,8 +103,7 @@ class CipherController extends AbstractController
             $response->setCache(['max_age' => 0]);
             return $response;
         }
-        $form = $this->createForm(CipherType::class, $cipher);
-        $form->handleRequest($request);
+        $form = $this->makeForm($cipher, $request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
