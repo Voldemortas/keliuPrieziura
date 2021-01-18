@@ -9,17 +9,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\AdminService;
 
 /**
  * @Route("/section")
  */
 class SectionController extends AbstractController
 {
+    private $adminService;
+    public function __construct(AdminService $adminService)
+    {
+        $this->adminService = $adminService;
+    }
     /**
      * @Route("/", name="section_index", methods={"GET"})
      */
     public function index(SectionRepository $sectionRepository): Response
     {
+        if (!$this->adminService->isAdmin()) {
+            $response =  $this->redirect('/', 301);
+            $response->setCache(['max_age' => 0]);
+            return $response;
+        }
         return $this->render('section/index.html.twig', [
             'sections' => $sectionRepository->findAll(),
         ]);
@@ -30,6 +41,11 @@ class SectionController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        if (!$this->adminService->isAdmin()) {
+            $response =  $this->redirect('/', 301);
+            $response->setCache(['max_age' => 0]);
+            return $response;
+        }
         $section = new Section();
         $form = $this->createForm(SectionType::class, $section);
         $form->handleRequest($request);
@@ -53,6 +69,11 @@ class SectionController extends AbstractController
      */
     public function show(Section $section): Response
     {
+        if (!$this->adminService->isAdmin()) {
+            $response =  $this->redirect('/', 301);
+            $response->setCache(['max_age' => 0]);
+            return $response;
+        }
         return $this->render('section/show.html.twig', [
             'section' => $section,
         ]);
@@ -63,6 +84,11 @@ class SectionController extends AbstractController
      */
     public function edit(Request $request, Section $section): Response
     {
+        if (!$this->adminService->isAdmin()) {
+            $response =  $this->redirect('/', 301);
+            $response->setCache(['max_age' => 0]);
+            return $response;
+        }
         $form = $this->createForm(SectionType::class, $section);
         $form->handleRequest($request);
 
@@ -83,7 +109,12 @@ class SectionController extends AbstractController
      */
     public function delete(Request $request, Section $section): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$section->getId(), $request->request->get('_token'))) {
+        if (!$this->adminService->isAdmin()) {
+            $response =  $this->redirect('/', 301);
+            $response->setCache(['max_age' => 0]);
+            return $response;
+        }
+        if ($this->isCsrfTokenValid('delete' . $section->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($section);
             $entityManager->flush();

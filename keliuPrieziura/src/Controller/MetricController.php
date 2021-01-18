@@ -9,17 +9,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\AdminService;
 
 /**
  * @Route("/metric")
  */
 class MetricController extends AbstractController
 {
+    private $adminService;
+    public function __construct(AdminService $adminService)
+    {
+        $this->adminService = $adminService;
+    }
     /**
      * @Route("/", name="metric_index", methods={"GET"})
      */
     public function index(MetricRepository $metricRepository): Response
     {
+        if (!$this->adminService->isAdmin()) {
+            $response =  $this->redirect('/', 301);
+            $response->setCache(['max_age' => 0]);
+            return $response;
+        }
         return $this->render('metric/index.html.twig', [
             'metrics' => $metricRepository->findAll(),
         ]);
@@ -30,6 +41,11 @@ class MetricController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        if (!$this->adminService->isAdmin()) {
+            $response =  $this->redirect('/', 301);
+            $response->setCache(['max_age' => 0]);
+            return $response;
+        }
         $metric = new Metric();
         $form = $this->createForm(MetricType::class, $metric);
         $form->handleRequest($request);
@@ -53,6 +69,11 @@ class MetricController extends AbstractController
      */
     public function show(Metric $metric): Response
     {
+        if (!$this->adminService->isAdmin()) {
+            $response =  $this->redirect('/', 301);
+            $response->setCache(['max_age' => 0]);
+            return $response;
+        }
         return $this->render('metric/show.html.twig', [
             'metric' => $metric,
         ]);
@@ -63,6 +84,11 @@ class MetricController extends AbstractController
      */
     public function edit(Request $request, Metric $metric): Response
     {
+        if (!$this->adminService->isAdmin()) {
+            $response =  $this->redirect('/', 301);
+            $response->setCache(['max_age' => 0]);
+            return $response;
+        }
         $form = $this->createForm(MetricType::class, $metric);
         $form->handleRequest($request);
 
@@ -83,7 +109,12 @@ class MetricController extends AbstractController
      */
     public function delete(Request $request, Metric $metric): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$metric->getId(), $request->request->get('_token'))) {
+        if (!$this->adminService->isAdmin()) {
+            $response =  $this->redirect('/', 301);
+            $response->setCache(['max_age' => 0]);
+            return $response;
+        }
+        if ($this->isCsrfTokenValid('delete' . $metric->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($metric);
             $entityManager->flush();

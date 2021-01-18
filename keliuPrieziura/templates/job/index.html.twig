@@ -14,8 +14,9 @@
                 <th>Pradžia</th>
                 <th>Pabaiga</th>
                 <th>Mato vnt.</th>
-                <th>Kiekis</th>
-                {{ is_admin()?'<th>Veiksmai</th>':''}}       
+                <th>Kiekis</th>       
+                <th>Keisti</th>       
+                <th>Trinti</th>       
             </tr>
         </thead>
         <tbody>
@@ -28,13 +29,14 @@
                 <td>{{ job.section.finish }}</td>
                 <td>{{ job.cipher.metric.name }}</td>
                 <td>{{ job.distance }}</td>
-                {% if is_admin() %}
-                    <td><a href="{{ path('job_edit', {'id': job.id}) }}">Redaguoti</a></td>
-                {% endif %}
+                <td>
+                    <a href="{{ path('job_edit', {'id': job.id}) }}">Redaguoti</a>  
+                </td>                      
+                <td>{{ include('job/_delete_form.html.twig') }}</td> 
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Nėra jokių įrašų</td>
             </tr>
         {% endfor %}
         </tbody>

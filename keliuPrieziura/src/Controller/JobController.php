@@ -6,10 +6,8 @@ use App\Entity\Job;
 use App\Entity\Section;
 use App\Entity\Road;
 use App\Entity\Cipher;
-use App\Form\JobType;
 use App\Repository\JobRepository;
 use App\Repository\RoadRepository;
-use App\Repository\SectionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -97,16 +95,6 @@ class JobController extends AbstractController
                 }, $road->getSections()->toArray())];
             }, $roadRepository->findAll()),
             'section' => 'null'
-        ]);
-    }
-
-    /**
-     * @Route("/job/{id}", name="job_show", methods={"GET"})
-     */
-    public function show(Job $job): Response
-    {
-        return $this->render('job/show.html.twig', [
-            'job' => $job,
         ]);
     }
 

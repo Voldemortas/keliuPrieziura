@@ -4,14 +4,14 @@ namespace App\Twig;
 
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
-use App\Repository\AdminRepository;
+use App\Service\AdminService;
 
 class AppExtension extends AbstractExtension
 {
-  private $adminRepository;
-  public function __construct(AdminRepository $adminRepository)
+  private $adminService;
+  public function __construct(AdminService $adminService)
   {
-    $this->adminRepository = $adminRepository;
+    $this->adminService = $adminService;
   }
 
   public function getFunctions()
@@ -23,6 +23,6 @@ class AppExtension extends AbstractExtension
 
   public function getAdmin(): bool
   {
-    return $this->adminRepository->findOneBy(['id' => 1])->getToggled();
+    return $this->adminService->isAdmin();
   }
 }

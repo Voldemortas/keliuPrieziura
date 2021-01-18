@@ -9,17 +9,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\AdminService;
 
 /**
  * @Route("/road_type")
  */
 class RoadTypeController extends AbstractController
 {
+    private $adminService;
+    public function __construct(AdminService $adminService)
+    {
+        $this->adminService = $adminService;
+    }
     /**
      * @Route("/", name="road_type_index", methods={"GET"})
      */
     public function index(RoadTypeRepository $roadTypeRepository): Response
     {
+        if (!$this->adminService->isAdmin()) {
+            $response =  $this->redirect('/', 301);
+            $response->setCache(['max_age' => 0]);
+            return $response;
+        }
         return $this->render('road_type/index.html.twig', [
             'road_types' => $roadTypeRepository->findAll(),
         ]);
@@ -30,6 +41,11 @@ class RoadTypeController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        if (!$this->adminService->isAdmin()) {
+            $response =  $this->redirect('/', 301);
+            $response->setCache(['max_age' => 0]);
+            return $response;
+        }
         $roadType = new RoadType();
         $form = $this->createForm(RoadTypeType::class, $roadType);
         $form->handleRequest($request);
@@ -53,6 +69,11 @@ class RoadTypeController extends AbstractController
      */
     public function show(RoadType $roadType): Response
     {
+        if (!$this->adminService->isAdmin()) {
+            $response =  $this->redirect('/', 301);
+            $response->setCache(['max_age' => 0]);
+            return $response;
+        }
         return $this->render('road_type/show.html.twig', [
             'road_type' => $roadType,
         ]);
@@ -63,6 +84,11 @@ class RoadTypeController extends AbstractController
      */
     public function edit(Request $request, RoadType $roadType): Response
     {
+        if (!$this->adminService->isAdmin()) {
+            $response =  $this->redirect('/', 301);
+            $response->setCache(['max_age' => 0]);
+            return $response;
+        }
         $form = $this->createForm(RoadTypeType::class, $roadType);
         $form->handleRequest($request);
 
@@ -83,6 +109,11 @@ class RoadTypeController extends AbstractController
      */
     public function delete(Request $request, RoadType $roadType): Response
     {
+        if (!$this->adminService->isAdmin()) {
+            $response =  $this->redirect('/', 301);
+            $response->setCache(['max_age' => 0]);
+            return $response;
+        }
         if ($this->isCsrfTokenValid('delete' . $roadType->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($roadType);

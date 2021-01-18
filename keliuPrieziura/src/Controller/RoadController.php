@@ -9,17 +9,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\AdminService;
 
 /**
  * @Route("/road")
  */
 class RoadController extends AbstractController
 {
+    private $adminService;
+    public function __construct(AdminService $adminService)
+    {
+        $this->adminService = $adminService;
+    }
     /**
      * @Route("/", name="road_index", methods={"GET"})
      */
     public function index(RoadRepository $roadRepository): Response
     {
+        if (!$this->adminService->isAdmin()) {
+            $response =  $this->redirect('/', 301);
+            $response->setCache(['max_age' => 0]);
+            return $response;
+        }
         return $this->render('road/index.html.twig', [
             'roads' => $roadRepository->findAll(),
         ]);
@@ -30,6 +41,11 @@ class RoadController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        if (!$this->adminService->isAdmin()) {
+            $response =  $this->redirect('/', 301);
+            $response->setCache(['max_age' => 0]);
+            return $response;
+        }
         $road = new Road();
         $form = $this->createForm(RoadType::class, $road);
         $form->handleRequest($request);
@@ -53,6 +69,11 @@ class RoadController extends AbstractController
      */
     public function show(Road $road): Response
     {
+        if (!$this->adminService->isAdmin()) {
+            $response =  $this->redirect('/', 301);
+            $response->setCache(['max_age' => 0]);
+            return $response;
+        }
         return $this->render('road/show.html.twig', [
             'road' => $road,
         ]);
@@ -63,6 +84,11 @@ class RoadController extends AbstractController
      */
     public function edit(Request $request, Road $road): Response
     {
+        if (!$this->adminService->isAdmin()) {
+            $response =  $this->redirect('/', 301);
+            $response->setCache(['max_age' => 0]);
+            return $response;
+        }
         $form = $this->createForm(RoadType::class, $road);
         $form->handleRequest($request);
 
@@ -83,6 +109,11 @@ class RoadController extends AbstractController
      */
     public function delete(Request $request, Road $road): Response
     {
+        if (!$this->adminService->isAdmin()) {
+            $response =  $this->redirect('/', 301);
+            $response->setCache(['max_age' => 0]);
+            return $response;
+        }
         if ($this->isCsrfTokenValid('delete' . $road->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($road);
