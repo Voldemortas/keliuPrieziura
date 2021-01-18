@@ -1,11 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Metric{% endblock %}
 
 {% block body %}
-    <h1>Create new Metric</h1>
+    <h1>Sukurti naują matą</h1>
 
     {{ include('metric/_form.html.twig') }}
 
-    <a href="{{ path('metric_index') }}">back to list</a>
+    <a href="{{ path('metric_index') }}">Grįžti į sąrašą</a>
 {% endblock %}

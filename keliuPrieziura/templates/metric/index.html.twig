@@ -1,34 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Metric index{% endblock %}
-
 {% block body %}
-    <h1>Metric index</h1>
+    <h1>Matai</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
+                <th>Matas</th>
+                <th>Keisti</th>       
+                <th>Trinti</th>     
             </tr>
         </thead>
         <tbody>
         {% for metric in metrics %}
             <tr>
-                <td>{{ metric.id }}</td>
                 <td>{{ metric.name }}</td>
                 <td>
-                    <a href="{{ path('metric_edit', {'id': metric.id}) }}">edit</a>
-                </td>
+                    <a href="{{ path('metric_edit', {'id': metric.id}) }}">Redaguoti</a>  
+                </td>                      
+                <td>{{ include('metric/_delete_form.html.twig') }}</td> 
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Nėra jokių įrašų</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('metric_new') }}">Create new</a>
+    <a href="{{ path('metric_new') }}">Sukurti naują</a>
 {% endblock %}

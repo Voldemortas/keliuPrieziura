@@ -3,13 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Metric;
-use App\Form\MetricType;
 use App\Repository\MetricRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\AdminService;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Form;
 
 /**
  * @Route("/metric")
@@ -21,6 +22,17 @@ class MetricController extends AbstractController
     {
         $this->adminService = $adminService;
     }
+
+    private function makeForm(Metric $metric, Request $request): Form
+    {
+        $form = $this->createFormBuilder($metric)
+            ->add('name', TextType::class, ['label' => 'Pavadinimas'])
+            ->getForm();
+        $form->handleRequest($request);
+        return $form;
+    }
+
+
     /**
      * @Route("/", name="metric_index", methods={"GET"})
      */
@@ -47,8 +59,7 @@ class MetricController extends AbstractController
             return $response;
         }
         $metric = new Metric();
-        $form = $this->createForm(MetricType::class, $metric);
-        $form->handleRequest($request);
+        $form = $this->makeForm($metric, $request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -74,8 +85,7 @@ class MetricController extends AbstractController
             $response->setCache(['max_age' => 0]);
             return $response;
         }
-        $form = $this->createForm(MetricType::class, $metric);
-        $form->handleRequest($request);
+        $form = $this->makeForm($metric, $request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
