@@ -65,21 +65,6 @@ class RoadTypeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="road_type_show", methods={"GET"})
-     */
-    public function show(RoadType $roadType): Response
-    {
-        if (!$this->adminService->isAdmin()) {
-            $response =  $this->redirect('/', 301);
-            $response->setCache(['max_age' => 0]);
-            return $response;
-        }
-        return $this->render('road_type/show.html.twig', [
-            'road_type' => $roadType,
-        ]);
-    }
-
-    /**
      * @Route("/{id}/edit", name="road_type_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, RoadType $roadType): Response

@@ -27,7 +27,6 @@ class CipherController extends AbstractController
     public function index(CipherRepository $cipherRepository): Response
     {
         if (!$this->adminService->isAdmin()) {
-
             $response =  $this->redirect('/', 301);
             $response->setCache(['max_age' => 0]);
             return $response;
@@ -63,21 +62,6 @@ class CipherController extends AbstractController
         return $this->render('cipher/new.html.twig', [
             'cipher' => $cipher,
             'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="cipher_show", methods={"GET"})
-     */
-    public function show(Cipher $cipher): Response
-    {
-        if (!$this->adminService->isAdmin()) {
-            $response =  $this->redirect('/', 301);
-            $response->setCache(['max_age' => 0]);
-            return $response;
-        }
-        return $this->render('cipher/show.html.twig', [
-            'cipher' => $cipher,
         ]);
     }
 

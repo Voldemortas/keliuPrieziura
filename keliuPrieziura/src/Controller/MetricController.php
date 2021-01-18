@@ -65,21 +65,6 @@ class MetricController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="metric_show", methods={"GET"})
-     */
-    public function show(Metric $metric): Response
-    {
-        if (!$this->adminService->isAdmin()) {
-            $response =  $this->redirect('/', 301);
-            $response->setCache(['max_age' => 0]);
-            return $response;
-        }
-        return $this->render('metric/show.html.twig', [
-            'metric' => $metric,
-        ]);
-    }
-
-    /**
      * @Route("/{id}/edit", name="metric_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Metric $metric): Response

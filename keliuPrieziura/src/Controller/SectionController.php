@@ -65,21 +65,6 @@ class SectionController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="section_show", methods={"GET"})
-     */
-    public function show(Section $section): Response
-    {
-        if (!$this->adminService->isAdmin()) {
-            $response =  $this->redirect('/', 301);
-            $response->setCache(['max_age' => 0]);
-            return $response;
-        }
-        return $this->render('section/show.html.twig', [
-            'section' => $section,
-        ]);
-    }
-
-    /**
      * @Route("/{id}/edit", name="section_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Section $section): Response
