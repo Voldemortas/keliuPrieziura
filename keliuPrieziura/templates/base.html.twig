@@ -3,31 +3,53 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Kelių danga!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+            <link href="{{ asset('style.css') }}" rel="stylesheet">
+        {% endblock %}
     </head>
     <body>
-        <nav>
-            {% if is_admin() %}
-                <ul>
-                    <li>
-                        <a href="/roadsection">Keliai</a>
-                    </li>
-                    <li>
-                        <a href="/cipher">Šifrai</a>
-                    </li>
-                    <li>
-                        <a href="/job">Darbai</a>
-                    </li>
-                </ul>
-                Teisės:  Admin<br />
-                <a href="/toggle">Pakeisti vartotojo tipą</a>
-            {% else %}
-                Teisės: Darbuotojas<br />
-                <a href="/toggle">Pakeisti vartotojo tipą</a>
-            {% endif %}
-        </nav>
-        <main>
-            {% block body %}{{body}}{% endblock %}
+        <aside class="sidenav">
+            <nav>
+                {% if not is_admin() %}
+                    <div class="sidenav__toggle">
+                        Teisės: Darbuotojas<br />
+                        <a href="/toggle">Pakeisti vartotojo tipą</a>
+                    </div>                   
+                {% else %}
+                    <div class="sidenav__toggle">
+                        Teisės:  Admin<br />
+                        <a href="/toggle">Pakeisti vartotojo tipą</a>
+                    </div>
+                    <hr />
+                    <ul class="sidenav__list">
+                        <li class="sidenav__list__item">
+                            <a href="/road">Keliai</a>
+                            <ul class="sidenav__list__list">
+                                <li class="sidenav__list__item">
+                                    <a href="/section">Ruožai</a>
+                                </li>
+                                <li class="sidenav__list__item">
+                                    <a href="/road_type">Dangos</a>
+                                </li>
+                            </ul>
+                        </li class="sidenav__list__item">
+                        <li class="sidenav__list__item">
+                            <a href="/cipher">Šifrai</a>
+                        </li class="sidenav__list__item">
+                        <li class="sidenav__list__item">
+                            <a href="/metric">Matai</a>
+                        </li class="sidenav__list__item">
+                        <li class="sidenav__list__item">
+                            <a href="/">Darbai</a>
+                        </li>
+                    </ul>
+                {% endif %}
+            </nav>
+        </aside>
+        <main class="main">
+            <div class="main_content">
+                {% block body %}{{body}}{% endblock %}
+            </div
         </main>
         {% block javascripts %}{% endblock %}
     </body>
