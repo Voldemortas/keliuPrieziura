@@ -3,13 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Road;
-use App\Form\RoadType;
+use App\Entity\RoadType;
 use App\Repository\RoadRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\AdminService;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Form;
 
 /**
  * @Route("/road")
@@ -21,6 +25,23 @@ class RoadController extends AbstractController
     {
         $this->adminService = $adminService;
     }
+
+    private function makeForm(Road $road, Request $request): Form
+    {
+        $form = $this->createFormBuilder($road)
+            ->add('number', TextType::class, ['label' => 'Numeris'])
+            ->add('name', TextType::class, ['label' => 'Pavadinimas'])
+            ->add('level', NumberType::class, ['label' => 'Lygis'])
+            ->add('type', EntityType::class, [
+                'class' => RoadType::class,
+                'choice_label' => 'name',
+                'label' => 'Danga'
+            ])
+            ->getForm();
+        $form->handleRequest($request);
+        return $form;
+    }
+
     /**
      * @Route("/", name="road_index", methods={"GET"})
      */
@@ -47,8 +68,7 @@ class RoadController extends AbstractController
             return $response;
         }
         $road = new Road();
-        $form = $this->createForm(RoadType::class, $road);
-        $form->handleRequest($request);
+        $form = $this->makeForm($road, $request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -74,8 +94,7 @@ class RoadController extends AbstractController
             $response->setCache(['max_age' => 0]);
             return $response;
         }
-        $form = $this->createForm(RoadType::class, $road);
-        $form->handleRequest($request);
+        $form = $this->makeForm($road, $request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();

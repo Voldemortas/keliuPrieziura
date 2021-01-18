@@ -1,38 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Road index{% endblock %}
-
 {% block body %}
-    <h1>Road index</h1>
+    <h1>Keliai</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Number</th>
-                <th>Level</th>
-                <th>actions</th>
+                <th>Numeris</th>
+                <th>Pavadinimas</th>
+                <th>Lygis</th>
+                <th>Danga</th>
+                <th>Keisti</th>
+                <th>Trinti</th>
             </tr>
         </thead>
         <tbody>
         {% for road in roads %}
             <tr>
-                <td>{{ road.id }}</td>
-                <td>{{ road.name }}</td>
                 <td>{{ road.number }}</td>
+                <td>{{ road.name }}</td>
                 <td>{{ road.level }}</td>
+                <td>{{ road.type.name }}</td>
                 <td>
-                    <a href="{{ path('road_edit', {'id': road.id}) }}">edit</a>
+                    <a href="{{ path('road_edit', {'id': road.id}) }}">Redaguoti</a>
                 </td>
+                <td>{{ include('road/_delete_form.html.twig') }}</td> 
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">Nėra jokių įrašų</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('road_new') }}">Create new</a>
+    <a href="{{ path('road_new') }}">Sukurti naują</a>
 {% endblock %}

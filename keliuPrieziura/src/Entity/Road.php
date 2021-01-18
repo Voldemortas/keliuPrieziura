@@ -6,6 +6,8 @@ use App\Repository\RoadRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
  * @ORM\Entity(repositoryClass=RoadRepository::class)
@@ -136,5 +138,13 @@ class Road
     public function getSelectName(): ?string
     {
         return $this->number . ' ' . $this->name;
+    }
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraint('level', new Assert\GreaterThan([
+            'value' => 0,
+            'message' => 'Turi būti daugiau arba lygu 0',
+        ]));
     }
 }
